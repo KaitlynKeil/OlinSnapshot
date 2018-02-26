@@ -71,7 +71,7 @@ function createGraph() {*/
     var nodes = bubble.nodes(data_sample)
       
     //create a node for each bubble file
-    var node = chart.selectAll(".node")
+    var node = svg.selectAll(".node")
       //bind data 
       .data(nodes).enter()
     .append("g")
@@ -81,14 +81,14 @@ function createGraph() {*/
     //add attributes to each create bubble
     node.append("circle")
       .attr("r",function(d) { return d.r; })
-      .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
+      .attr("fill", color) //make nodes with children invisible
       .attr("opacity", 0.25)
-      .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+      .attr("stroke", color) //make nodes with children invisible
       .attr("stroke-width", 2);
 
     //add labeled text on top of each bubble
     node.append("text")
-      .text(function(d) { return d.name; });
+      .text(function(d) { return "hi"; });
 
 
     
