@@ -22,6 +22,9 @@ Python 3
 Heroku
 Flask
 Pip
+json
+psycopg2
+postgresql
 Virtual Environment
 Linux? (Untested in Windows)
 
@@ -54,6 +57,10 @@ psql
 exit // exits postgres
 ```
 
-Once Postgres is installed and you can connect, you’ll need to export the DATABASE_URL environment variable for your app to connect to it when running locally. `export DATABASE_URL=postgres://$(whoami)`.
+Once Postgres is installed and you can connect, you’ll need to export the DATABASE_URL environment variable for your app to connect to it when running locally. 
+```
+printenv DATABASE_URL
+DATABASE_URL=<value from printenv DATABASE_URL>
+```
 
 Here's a [helpful link](https://devcenter.heroku.com/articles/heroku-postgresql).
