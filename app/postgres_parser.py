@@ -3,11 +3,21 @@ import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
 from config import config
+from set_up_database import insert_from_dict, populate_join_tab
 import json
 # # This is the first piece that we will eventually need to use Postgres
 # parse.uses_netloc.append("postgres")
 # url = parse.urlparse(os.environ["DATABASE_URL"])
 
+from datetime import date, datetime, time
+import time as t
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, (datetime, time, date)):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
 
 def connect():
 	""" Connect to the PostgreSQL database server
@@ -25,57 +35,56 @@ def connect():
 		return conn, cur
 	except(Exception, psycopg2.DatabaseError) as error:
 		print(error)
-		return None, None  
+		return None, None
 
-def insert_from_dict(cur, tab_name, dict):
-	""" Inserts a row into the table named by tab_name
-	as specified by the keys and values of dict
-	
-	takes:
-	cur      - cursor of the above connection
-	tab_name - string name of the table to be inserted into
-	dict     - dictionary object with keys as the column names
-				and the values as values to be inserted
+def add_email(cur, email_dict):
+	""" Given a dictionary containing the necessary information,
+	creates an entry in the msg and msg_to_cat tables.
+	email_dict form:
+		{
+			'subject': str,
+			'body': str,
+			'event_time': datetime.time,
+			'event_date': datetime.date,
+			'event_place': str,
+			'who': str,
+			'categories':any combination of ['Food', 'Event', 'Lost', 'Other']
+		}
 	"""
-	columns = dict.keys()
-	values = [dict[column] for column in columns]
-
-	insert_statement = 'insert into %s (%s) values %s'
-
-	cur.execute(insert_statement, (tab_name, AsIs(','.join(columns)), tuple(values)))
-
-def populate_join_tab(conn, cur, email_id, cat_list):
-	""" Given the connection, cursor, email id (as represented in the msg_tab),
-	and list of categories the given email corresponds to, fills in the join_tab
-	"""
-	insert_statement = 'insert into email_interface.msg_to_cat (msg_id, cat_id) values %s'
-	for cat in cat_list:
-		cur.execute(insert_statement, (tuple(email_id, cat)))
-
-def insert_row_cat(conn, cur, cat_name, duration):
-	""" insert a new row into the table """
-	sql = """INSERT INTO email.cat(cat_name, duration)
-			 VALUES(%s, %s) RETURNING cat_id;"""
-	cat_id = None
-	try:
-		# execute the INSERT statement
-		cur.execute(sql, (cat_name, duration))
-		# get the generated id back
-		cat_id = cur.fetchone()[0]
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
- 
-	return cat_id
+	cat_list = email_dict['categories']
+	print("Got cat list")
+	del email_dict['categories']
+	print("Deleted categories")
+	msg_id = insert_from_dict(cur, 'emails.msg', email_dict, 'msg_id')
+	print("Adding Email...")
+	populate_join_tab(cur, 'emails', msg_id, cat_list)
 
 def tab_to_json(conn, cat):
 	""" Selects all messages that are from a certain category 
 	and converts them into json
 	"""
 	cur = conn.cursor(cursor_factory=RealDictCursor)
-	sql = """SELECT * from email_interface.messages AS msgs WHERE (msgs.msg_id = email_interface.msg_to_cat AND email_interface.msg_to_cat = %s"""
-	cur.execute(sql, cat)
-	print(json.dumps(cur.fetchall(), indent=2))
+	sql = """SELECT emails.msg.* 
+			FROM ((emails.cats INNER JOIN emails.msg_to_cat 
+			ON (emails.cats.cat_id = emails.msg_to_cat.cat_id AND emails.cats.cat_name = %s)) 
+			INNER JOIN emails.msg ON emails.msg_to_cat.msg_id = emails.msg.msg_id)"""
+	cur.execute(sql, (cat,))
+	email_list = cur.fetchall()
+	for email in email_list:
+		print(json.dumps(email,indent = 2, cls=DateTimeEncoder))
 	cur.close()
+
+def get_from_cat():
+	""" While running, waits for input."""
+	conn, cur = connect()
+	while(1):
+		nb = input('Enter a category (Food, Event, Lost, or Other) or "quit": ')
+		print(nb)
+		if "quit" in nb.lower():
+			break
+		tab_to_json(conn, nb)
+
+	no_commit_close_conn(conn, cur)
 
 def close_conn(conn = None, cur = None):
 	""" Close and commit changes of conn """
@@ -101,6 +110,22 @@ def no_commit_close_conn(conn = None, cur = None):
 
 if __name__ == '__main__':
 	conn, cur = connect()
-	# insert_row_cat(conn, cur, 'Nonsense!', 3)
-	# tab_to_json(conn)
+	tab_to_json(conn, 'Food')
+	tab_to_json(conn, 'Event')
+	email_dict = {
+			'subject': 'Boston Tea Party',
+			'body': 'I am putting on a Boston Tea Party in Boston! Come to Boston Commons right now!',
+			'event_time': datetime.now().strftime('%H:%M:%S'),
+			'event_date': date.today().strftime('%Y-%m-%d'),
+			'event_place': 'Boston Commons',
+			'who': 'Kaitlyn.keil@students.olin.edu',
+			'categories':['Food', 'Event']
+		}
+	add_email(cur, email_dict)
+	tab_to_json(conn, 'Food')
+	tab_to_json(conn, 'Event')
 	no_commit_close_conn(conn, cur)
+	# get_from_cat()
+	# here's the line you need:
+	# SELECT emails.msg.* FROM ((emails.cats INNER JOIN emails.msg_to_cat ON (emails.cats.cat_id = emails.msg_to_cat.cat_id AND emails.cats.cat_name = 'Event')) INNER JOIN emails.msg ON emails.msg_to_cat.msg_id = emails.msg.msg_id);
+

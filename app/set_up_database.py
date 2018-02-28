@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
 from config import config
-from postgres_parser import connect, close_conn
+# from postgres_parser import connect, close_conn
 
 def create_schema(cur, sch_name):
 	""" Given a cursor and a name,
@@ -50,18 +50,18 @@ def create_msg_tab(cur, sch_name):
 	try:
 		tab_name = sch_name+".msg"
 		tab_make = """CREATE TABLE %s(msg_id serial PRIMARY KEY,
-									subject character(80),
-									body character(500),
+									subject varchar(80),
+									body text,
 									event_time time,
 									event_date date,
-									event_place character(50),
-									who character(100))"""
+									event_place varchar(50),
+									who varchar(100))"""
 		cur.execute(tab_make, (AsIs(tab_name),))
 	except (Exception, psycopg2.DatabaseError) as error:
 		print(error)
 	return 1
 
-def insert_from_dict(cur, tab_name, dict):
+def insert_from_dict(cur, tab_name, datadict, id_name = None):
 	""" Inserts a row into the table named by tab_name
 	as specified by the keys and values of dict
 	
@@ -71,15 +71,25 @@ def insert_from_dict(cur, tab_name, dict):
 	dict     - dictionary object with keys as the column names
 				and the values as values to be inserted
 	"""
-	columns = dict.keys()
-	values = [dict[column] for column in columns]
+	columns = datadict.keys()
+	print(columns)
+	values = [datadict[column] for column in columns]
 
-	insert_statement = 'insert into %s (%s) values %s'
-
+	return_id = None
 	try:
-		cur.execute(insert_statement, (tab_name, AsIs(','.join(columns)), tuple(values)))
+		if id_name is None:
+			insert_statement = 'insert into %s (%s) values %s'
+			cur.execute(insert_statement, (AsIs(tab_name), AsIs(','.join(columns)), tuple(values)))
+		else:
+			insert_statement = 'insert into %s (%s) values %s returning %s'
+			cur.execute(insert_statement, (AsIs(tab_name), AsIs(','.join(columns)), tuple(values), AsIs(id_name)))
+			return_id = cur.fetchone()[0]
+		print("Executed")
+
 	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
+		print("Error:",error)
+
+	return return_id
 
 def make_rows_cat(cur, tab_name):
 	""" Populate the category table from dictionaries.
@@ -104,16 +114,74 @@ def make_rows_cat(cur, tab_name):
 	insert_from_dict(cur, "emails.cats", lost_dict)
 	insert_from_dict(cur, "emails.cats", other_dict)
 
-def insert_row_join(cur, cat_id, msg_id):
-	""" insert a new row into the table """
-	pass
+def get_cat_id(cur, sch_name, cat_name):
+	""" Given a schema name and the desired category, returns the
+	cat_id
+	"""
+	tab_name = sch_name+'.cats'
+	sql = """SELECT cat_id FROM %s WHERE %s.cat_name = %s"""
+	cur.execute(sql, (AsIs(tab_name), AsIs(tab_name), cat_name))
+	return cur.fetchone()[0]
 	
+def populate_join_tab(cur, sch_name, email_id, cat_list):
+	""" Given the connection, cursor, email id (as represented in the msg_tab),
+	and list of categories the given email corresponds to, fills in the join_tab
+	"""
+	tab_name = sch_name+".msg_to_cat"
+	insert_statement = 'insert into %s (msg_id, cat_id) values %s'
+
+	for cat in cat_list:
+		print("Adding", cat + "...")
+		cat_id = get_cat_id(cur, sch_name, cat)
+		cur.execute(insert_statement, (AsIs(tab_name), tuple((email_id, cat_id))))
+
+def connect():
+	""" Connect to the PostgreSQL database server
+	returns a connection and a cursor """
+	conn = None
+	try:
+		# read connection parameters
+		params = config()
+ 
+		# connect to the PostgreSQL server
+		print('Connecting to the PostgreSQL database...')
+		conn = psycopg2.connect(**params)
+		cur = conn.cursor()
+
+		return conn, cur
+	except(Exception, psycopg2.DatabaseError) as error:
+		print(error)
+		return None, None
+
+def close_conn(conn = None, cur = None):
+	""" Close and commit changes of conn """
+	try:
+		cur.close()
+	except (Exception, psycopg2.DatabaseError) as error:
+		print(error)
+	finally:
+		if conn is not None:
+			conn.commit()
+			conn.close()
+			print('Database connection closed.')
+
+def no_commit_close_conn(conn = None, cur = None):
+	try:
+		cur.close()
+	except (Exception, psycopg2.DatabaseError) as error:
+		print(error)
+	finally:
+		if conn is not None:
+			conn.close()
+			print('Database connection closed.')
 
 if __name__ == '__main__':
 	conn, cur = connect()
 	sch_name = 'emails'
-	create_schema(cur, sch_name)
-	create_cat_tab(cur, sch_name)
-	create_join_tab(cur, sch_name)
-	create_msg_tab(cur, sch_name)
-	close_conn(conn, cur)
+	# create_schema(cur, sch_name)
+	# create_cat_tab(cur, sch_name)
+	# create_join_tab(cur, sch_name)
+	# create_msg_tab(cur, sch_name)
+	# close_conn(conn, cur)
+	get_cat_id(cur, sch_name, 'Event')
+	no_commit_close_conn(conn, cur)
