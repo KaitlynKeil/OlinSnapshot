@@ -59,8 +59,9 @@ exit // exits postgres
 
 Once Postgres is installed and you can connect, you’ll need to export the DATABASE_URL environment variable for your app to connect to it when running locally. 
 ```
-printenv DATABASE_URL
-DATABASE_URL=<value from printenv DATABASE_URL>
+export DATBASE_URL
+heroku config -a olin-snapshot
+DATABASE_URL=<value from heroku config DATABASE_URL>
 ```
 
 Here's a [helpful link](https://devcenter.heroku.com/articles/heroku-postgresql).

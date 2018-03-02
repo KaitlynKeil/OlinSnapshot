@@ -1,8 +1,9 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
-from config import config
-# from postgres_parser import connect, close_conn
+from config import connect, close_conn, no_commit_close_conn
+from datetime import date, datetime, time
+import time as t
 
 def create_schema(cur, sch_name):
 	""" Given a cursor and a name,
@@ -60,6 +61,28 @@ def create_msg_tab(cur, sch_name):
 	except (Exception, psycopg2.DatabaseError) as error:
 		print(error)
 	return 1
+
+def add_email(cur, email_dict):
+	""" Given a dictionary containing the necessary information,
+	creates an entry in the msg and msg_to_cat tables.
+	email_dict form:
+		{
+			'subject': str,
+			'body': str,
+			'event_time': datetime.time,
+			'event_date': datetime.date,
+			'event_place': str,
+			'who': str,
+			'categories':any combination of ['Food', 'Event', 'Lost', 'Other']
+		}
+	"""
+	cat_list = email_dict['categories']
+	print("Got cat list")
+	del email_dict['categories']
+	print("Deleted categories")
+	msg_id = insert_from_dict(cur, 'emails.msg', email_dict, 'msg_id')
+	print("Adding Email...")
+	populate_join_tab(cur, 'emails', msg_id, cat_list)
 
 def insert_from_dict(cur, tab_name, datadict, id_name = None):
 	""" Inserts a row into the table named by tab_name
@@ -134,46 +157,6 @@ def populate_join_tab(cur, sch_name, email_id, cat_list):
 		print("Adding", cat + "...")
 		cat_id = get_cat_id(cur, sch_name, cat)
 		cur.execute(insert_statement, (AsIs(tab_name), tuple((email_id, cat_id))))
-
-def connect():
-	""" Connect to the PostgreSQL database server
-	returns a connection and a cursor """
-	conn = None
-	try:
-		# read connection parameters
-		params = config()
- 
-		# connect to the PostgreSQL server
-		print('Connecting to the PostgreSQL database...')
-		conn = psycopg2.connect(**params)
-		cur = conn.cursor()
-
-		return conn, cur
-	except(Exception, psycopg2.DatabaseError) as error:
-		print(error)
-		return None, None
-
-def close_conn(conn = None, cur = None):
-	""" Close and commit changes of conn """
-	try:
-		cur.close()
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
-	finally:
-		if conn is not None:
-			conn.commit()
-			conn.close()
-			print('Database connection closed.')
-
-def no_commit_close_conn(conn = None, cur = None):
-	try:
-		cur.close()
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
-	finally:
-		if conn is not None:
-			conn.close()
-			print('Database connection closed.')
 
 if __name__ == '__main__':
 	conn, cur = connect()
