@@ -1,21 +1,29 @@
-var data_sample = [
-    {"name":"Test1",
-    "category": "Food",
-    "location": "West Hall"
+var data_sample = 
+{
+  "data": [
+    {
+      "category": "Food",
+      "emails": [
+        {"name":"Fight Club"},
+        {"name":"OWL"}
+      ]
     },
-    {"name":"Test2",
-    "category": "Event",
-    "location": "West Hall"
+    {
+      "category":"Events",
+      "emails": [
+        {"name": "HackingLib"},
+        {"name": "President's Council"}
+      ]
     },
-    {"name":"Test3",
-    "category": "Other",
-    "location": "West Hall"
-    },
-    {"name":"Test4",
-    "category": "Educational",
-    "location": "West Hall"
+    {
+      "category":"Other",
+      "emails": [
+        {"name": "Where is Saarth"},
+        {"name": "What is Happening?"}
+      ]
     }
-]
+  ]
+};
 //Create the SVG body
 var svg = d3.select("body")
     .append("svg")
@@ -59,7 +67,7 @@ function createGraph() {*/
         .sort(null)  // disable sorting, use DOM tree traversal
         .size([width, height])  // chart layout size
         .padding(1)  // padding between circles
-        .radius(function(d) { return 20 + (sizeOfRadius(d) * 30); });  // radius for each circle
+        .radius(function(d) { return 20 }) //;+ (sizeOfRadius(d.data.category.emails.length) * 30); });  // radius for each circle
 
     //initialize SVG Body/chart
     var svg = d3.select('#chart').append('svg') //add the bubbles to all charts
@@ -88,7 +96,7 @@ function createGraph() {*/
 
     //add labeled text on top of each bubble
     node.append("text")
-      .text(function(d) { return "hi"; });
+      .text(function(d) { return d.name; });
 
 
     
