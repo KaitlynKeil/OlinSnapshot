@@ -14,7 +14,6 @@ Flask
 Pip
 json
 psycopg2
-postgresql
 Virtual Environment
 Linux? (Untested in Windows)
 
