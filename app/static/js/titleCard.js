@@ -4,26 +4,101 @@ var data_sample =
     {
       "category": "Food",
       "emails": [
-        {"name":"Fight Club"},
-        {"name":"OWL"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
       ]
     },
     {
-      "category":"Events",
+      "category":"Event",
       "emails": [
-        {"name": "HackingLib"},
-        {"name": "President's Council"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
       ]
     },
     {
       "category":"Other",
       "emails": [
-        {"name": "Where is Saarth"},
-        {"name": "What is Happening?"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    },
+    {
+      "category":"Lost",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {       
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
       ]
     }
   ]
 };
+
 //Create the SVG body
 var svg = d3.select("body")
     .append("svg")
@@ -75,26 +150,37 @@ function createGraph() {*/
         .attr('height',height)
         .attr('class', 'bubble');
 
-    //"LOAD" DATA
-    var nodes = bubble.nodes(data_sample)
-      
-    //create a node for each bubble file
-    var node = svg.selectAll(".node")
-      //bind data 
-      .data(nodes).enter()
-    .append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    // REQUEST the Data from data index created in __init__.py
+    d3.json("/data", function(error, quotes) {
+      //create a node for each bubble file
+      var node = svg.selectAll('.node')
+      //bind data
+        .data(bubble.nodes(quotes)
+        .filter(function(d) { return !d.children; }))
+        .enter().append('g')
+        .attr('class', 'node')
+        .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'});
+      //add attributes to each create bubble
+      node.append('circle')
+        .attr('r', function(d) { return d.r; })
+        .style('fill', function(d) { return color(d.symbol); });
+      //add labeled text on top of each bubble
+      node.append('text')
+        .attr("dy", ".3em")
+        .style('text-anchor', 'middle')
+        .text(function(d) { return d.symbol; });
 
-    //add attributes to each create bubble
+    })
+
+    
     node.append("circle")
-      .attr("r",function(d) { return d.r; })
+      .attr("r",function(d) { return d.data.category.emails.length; })
       .attr("fill", color) //make nodes with children invisible
       .attr("opacity", 0.25)
       .attr("stroke", color) //make nodes with children invisible
       .attr("stroke-width", 2);
 
-    //add labeled text on top of each bubble
+    
     node.append("text")
       .text(function(d) { return d.name; });
 
