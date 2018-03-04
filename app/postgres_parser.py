@@ -2,8 +2,8 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
-from config import connect, close_conn, no_commit_close_conn
-from set_up_database import insert_from_dict, populate_join_tab, add_email
+from app.config import connect, close_conn, no_commit_close_conn
+from app.set_up_database import insert_from_dict, populate_join_tab, add_email
 import json
 # # This is the first piece that we will eventually need to use Postgres
 # parse.uses_netloc.append("postgres")
@@ -42,7 +42,7 @@ def all_cats_to_json(conn):
 		temp_dict = {"category":cat,
 		"emails":tab_to_json(conn, cat)}
 		final_json["data"].append(temp_dict)
-	return final_json
+	return json.dumps(final_json, cls=DateTimeEncoder, indent=2)
 
 def get_from_cat():
 	""" While running, waits for input."""
@@ -58,7 +58,7 @@ def get_from_cat():
 
 if __name__ == '__main__':
 	conn, cur = connect()
-	print(json.dumps(all_cats_to_json(conn), cls=DateTimeEncoder, indent=2))
+	print(all_cats_to_json(conn))
 
 	no_commit_close_conn(conn, cur)
 	# get_from_cat()

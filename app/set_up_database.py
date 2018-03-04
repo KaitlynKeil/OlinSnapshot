@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
-from config import connect, close_conn, no_commit_close_conn
+from app.config import connect, close_conn, no_commit_close_conn
 from datetime import date, datetime, time
 import time as t
 
