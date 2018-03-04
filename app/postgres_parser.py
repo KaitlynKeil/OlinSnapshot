@@ -58,7 +58,7 @@ def get_from_cat():
 
 if __name__ == '__main__':
 	conn, cur = connect()
-	print(all_cats_to_json(conn))
+	print(json.dumps(all_cats_to_json(conn), cls=DateTimeEncoder, indent=2))
 
 	no_commit_close_conn(conn, cur)
 	# get_from_cat()
