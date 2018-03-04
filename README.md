@@ -4,16 +4,6 @@ Takes emails from the HelpMe and CarpeDiem email lists at Olin College and prese
 ##Contributors
 Mackenzie Frackleton, Kaitlyn Keil, Isa Bacett, and Wilson Tang
 
-
-### Requirements
-
-To use Postgres as a database with Python, you will need psycopg2.
-```
-pip install psycopg2
-pip freeze requirements.txt
-```
-
-
 ## Contributors
 Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 
@@ -35,6 +25,8 @@ git clone https://github.com/KaitlynKeil/OlinSnapshot.git
 cd OlinSnapshot
 source venv/bin/activate
 ```
+
+Create a heroku app and run git remote `heroku git:remote -a <app name>` to link.
 
 To run simple flask app on local host:
 ```
