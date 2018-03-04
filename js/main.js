@@ -4,26 +4,101 @@ var data_sample =
     {
       "category": "Food",
       "emails": [
-        {"name":"Fight Club"},
-        {"name":"OWL"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
       ]
     },
     {
-      "category":"Events",
+      "category":"Event",
       "emails": [
-        {"name": "HackingLib"},
-        {"name": "President's Council"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
       ]
     },
     {
       "category":"Other",
       "emails": [
-        {"name": "Where is Saarth"},
-        {"name": "What is Happening?"}
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    },
+    {
+      "category":"Lost",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {       
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
       ]
     }
   ]
 };
+
 //Create the SVG body
 var svg = d3.select("body")
     .append("svg")
@@ -88,7 +163,7 @@ function createGraph() {*/
 
     //add attributes to each create bubble
     node.append("circle")
-      .attr("r",function(d) { return d.r; })
+      .attr("r",function(d) { return d.data.category.emails.length; })
       .attr("fill", color) //make nodes with children invisible
       .attr("opacity", 0.25)
       .attr("stroke", color) //make nodes with children invisible
