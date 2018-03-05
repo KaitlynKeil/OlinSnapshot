@@ -467,7 +467,7 @@ node.append("text")
 
 
 
-
+/*
 // On Click, we want to go to next webpage for more information
 svg.on("click", function() {
     var coords = d3.mouse(this);
@@ -500,9 +500,9 @@ function handleMouseOver(d, i) {  // Add interactivity
       .text(function() {
         return [d.x, d.y];  // Value of the text
       });
-    }
+    }*/
 
-function handleMouseOut(d, i) {
+/*function handleMouseOut(d, i) {
       // Use D3 to select element, change color back to normal
       d3.select(this).attr({
         fill: "black",
@@ -512,20 +512,10 @@ function handleMouseOut(d, i) {
       // Select text by id and then remove
       d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();  // Remove text location
     }
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 ////////// PART 2 //////////
-
 
 //set screen pixel sizes
 var width = 800, height = 600;
@@ -539,26 +529,27 @@ var pack = d3.layout.pack()
   .size([width, height - 50])
   .padding(10);
 
-var nodes = pack.nodes(data_sample.data[0]);
+d3.json("/data", function(error,quotes) {
+  var nodes = pack.nodes(quotes.data[0]);
 
-var node = chart.selectAll(".node")
-    .data(nodes).enter()
-  .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  var node = chart.selectAll(".node")
+      .data(nodes).enter()
+    .append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-node.append("circle")
-    .attr("r",function(d) { return d.r })
-    .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
-    .attr("opacity", 0.25)
-    .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
-    .attr("stroke-width", 2);
-
-
-node.append("text")
-    .text(function(d) { return d.children ? "" : d.name; });
+  node.append("circle")
+      .attr("r",function(d) { return d.r })
+      .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
+      .attr("opacity", 0.25)
+      .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+      .attr("stroke-width", 2);
 
 
+  node.append("text")
+      .text(function(d) { return d.children ? "" : d.name; });
+
+});
 
 
 
