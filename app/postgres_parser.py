@@ -43,7 +43,7 @@ def all_cats_to_json(conn):
 		"children":tab_to_json(conn, cat),
 		"value":20}
 		final_json["data"].append(temp_dict)
-	return json.dumps(final_json, cls=DateTimeEncoder, indent=2)
+	return final_json
 
 def get_from_cat():
 	""" While running, waits for input."""
