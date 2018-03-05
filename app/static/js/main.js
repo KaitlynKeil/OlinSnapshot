@@ -2,95 +2,95 @@ var data_sample =
 {
   "data": [
     {
-      "category": "Food",
-      "emails": [
+      "name": "Food",
+      "children": [
         {
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
           "who": "kaitlyn"
         },
         {        
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
           "who": "kaitlyn"
         }
       ]
     },
     {
-      "category":"Event",
-      "emails": [
+      "name":"Event",
+      "children": [
         {
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
           "who": "kaitlyn"
         },
         {        
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
-          "who": "kaitlyn"
-        }
-
-      ]
-    },
-    {
-      "category":"Other",
-      "emails": [
-        {
-          "event_time": "17:22:57",
-          "body": "I am putting a Party",
-          "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
-          "event_data": "2018-03-02",
-          "msg-id": 5,
-          "who": "kaitlyn"
-        },
-        {        
-          "event_time": "17:22:57",
-          "body": "I am putting a Party",
-          "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
-          "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
           "who": "kaitlyn"
         }
 
       ]
     },
     {
-      "category":"Lost",
-      "emails": [
+      "name":"Other",
+      "children": [
         {
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    },
+    {
+      "name":"Lost",
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
           "who": "kaitlyn"
         },
         {       
           "event_time": "17:22:57",
           "body": "I am putting a Party",
           "event_place": "Boston Commons",
-          "subject": "Boston Tea Party",
+          "name": "Boston Tea Party",
           "event_data": "2018-03-02",
-          "msg-id": 5,
+          "value": 5,
           "who": "kaitlyn"
         }
 
@@ -99,108 +99,523 @@ var data_sample =
   ]
 };
 
-//Create the SVG body
-var svg = d3.select("body")
-    .append("svg")
-    .attr("width", '800px')
-    .attr("height", '800px');
+//var data_sample_json = JSON.parse(data_sample);
 
-//Create all the circle objects based on the data
-svg.selectAll("circle")
-    .data([32, 57, 112, 293]) //bind data
-  .enter().append("circle") //create circles 
-    .attr("cy", 60) //y axis
-    .attr("cx", function(d, i) { return i * 100 + 30; }) //x axis
-    .attr("r", function(d) { return Math.sqrt(d); }); //radius
+var example_2 =
+{
+  "name": "Data Development",
+  "value": 60,
+  "children": [
+    {
+      "name": "Data Visualization",
+      "value": 40,
+      "children": [
+        {"name": "D3.js", "value": 10},
+        {"name": "Dimple.js", "value": 9},
+        {"name": "matplotlib(python)", "value": 8},
+        {"name": "ggplot(R)", "value": 7}
+      ]
+    }, 
+    {
+      "name": "Data Analysis",
+      "value": 20,
+      "children": [
+        {"name": "numpy", "value": 9},
+        {"name": "scikit-learn", "value": 8}
+      ]
+    }
+  ]
+};
 
-//create an empty tool top
-var tooltip = d3.select("body")
-  .append ("div")
-  .style("position", "absolute")
-  .style("z-index", "10")
-  .style("visibility", "hidden")
-  .style("color", "white")
-  .style("padding", "8px")
-  .style("background-color", "rgba(0, 0, 0, 0.75)")
-  .style("border-radius", "6px")
-  .style("font", "12px sans-serif")
-  .text("tooltip");
-//
+var test_json = {
+  "name": "Food",
+  "value": 60,
+  "children": [
+    {
+      "event_time": "17:22:57",
+      "body": "I am putting a Party",
+      "event_place": "Boston Commons",
+      "name": "Boston Tea Party",
+      "event_data": "2018-03-02",
+      "value": 5,
+      "who": "kaitlyn"
+    },
+    {        
+      "event_time": "17:22:57",
+      "body": "I am putting a Party",
+      "event_place": "Boston Commons",
+      "name": "Boston Tea Party",
+      "event_data": "2018-03-02",
+      "value": 5,
+      "who": "kaitlyn"
+    }
+  ]
+};
+
+var working_json = {
+  "name": "Data Development",
+  "value": 60,
+  "children": [
+    {
+      "event_time": "17:22:57",
+      "body": "I am putting a Party",
+      "event_place": "Boston Commons",
+      "name": "Boston Tea Party",
+      "event_data": "2018-03-02",
+      "value": 5,
+      "who": "kaitlyn"
+    },
+    {        
+      "event_time": "17:22:57",
+      "body": "I am putting a Party",
+      "event_place": "Boston Commons",
+      "name": "Boston Tea Party",
+      "event_data": "2018-03-02",
+      "value": 5,
+      "who": "kaitlyn"
+    }
+  ]
+};
+
+var working_json_v2 = 
+{
+  "name": "Data",
+  "value": 60,
+  "children": [
+    {
+      "name": "Food",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Lost",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    }
+  ]
+};
+
+var working_json_v3 = 
+{
+  "name": "Data",
+  "value": 60,
+  "children": [
+    {
+      "name": "Food",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "name": "Lost",
+      "value": 60,
+      "children": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "name": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "value": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    }
+  ]
+};
+
+var categories = 
+{
+  "name": "Categories",
+  "value": 60,
+  "children": [
+    {
+      "name":  "Food",
+      "value": data_sample.data[0].children.length * 5,
+      "color": "green"
+    },
+    {
+      "name":  "Other",
+      "value": data_sample.data[1].children.length * 5,
+      "color": "purple"
+    },
+    {
+      "name":  "Lost",
+      "value": data_sample.data[2].children.length * 5,
+      "color": "red"
+    },
+    {
+      "name":  "Events",
+      "value": data_sample.data[3].children.length * 5,
+      "color": "blue"
+    }
+  ]
+};
+
+var categories_2 = 
+{
+  "name": "Data Development",
+  "value": 60,
+  "children": [
+    {"name": "D3.js", "value": 10},
+    {"name": "Dimple.js", "value": 8},
+    {"name": "matplotlib(python)", "value": 6},
+    {"name": "ggplot(R)", "value": 4},
+    {"name": "numpy", "value": 9},
+    {"name": "scikit-learn", "value": 8}
+  ]
+}
+console.log(data_sample.data[0].children.length * 5);
+console.log(data_sample.data[1].children.length * 4);
+console.log(data_sample.data[2].children.length * 3);
+console.log(data_sample.data[3].children.length * 2);
+console.log(categories);
+
+
+
+//set screen pixel sizes
+var width = 800, height = 600;
+
+var chart = d3.select("body").append("svg")
+  .attr("width", width).attr("height", height) 
+  .append("g")
+    .attr("transform", "translate(50,50)");
+
+var pack = d3.layout.pack()
+  .size([width, height - 50])
+  .padding(10);
+
+var nodes = pack.nodes(categories);
+
+var node = chart.selectAll(".node")
+    .data(nodes).enter()
+  .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+node.append("circle")
+    .attr("r",function(d) { return d.r })
+    .attr("fill", function(d){ return d.children ? "#fff" : d.color; }) //make nodes with children invisible
+    .attr("opacity", 0.25)
+    .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+    .attr("stroke-width", 2);
+
+
+node.append("text")
+    .text(function(d) { return d.children ? "" : d.name; });
+
+
+
 /*
-createGraph();
+// On Click, we want to go to next webpage for more information
+svg.on("click", function() {
+    var coords = d3.mouse(this);
+    dataset.push(newData);   // Push data to our array
 
-function createGraph() {*/
-    var width = 960; // chart width
-    var height = 700; // chart height
-    var format = d3.format(",d");  // convert value to integer
-    //v3 syntax
-    var color = d3.scale.category20();  // create ordinal scale with 20 colors
-    var sizeOfRadius = d3.scale.pow().domain([-100,100]).range([-50,50]);  // https://github.com/mbostock/d3/wiki/Quantitative-Scales#pow
+    svg.selectAll("circle")  // For new circle, go through the update process
+      .data(dataset)
+      .enter()
+      .append("circle")
+      .attr(circleAttrs)  // Get attributes from circleAttrs var
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
+  })
 
-    //create bubble in a specific layout format
-    var bubble = d3.layout.pack()
-        .sort(null)  // disable sorting, use DOM tree traversal
-        .size([width, height])  // chart layout size
-        .padding(1)  // padding between circles
-        .radius(function(d) { return 20 }) //;+ (sizeOfRadius(d.data.category.emails.length) * 30); });  // radius for each circle
+// Create Event Handlers for mouse
+function handleMouseOver(d, i) {  // Add interactivity
 
-    //initialize SVG Body/chart
-    var svg = d3.select('#chart').append('svg') //add the bubbles to all charts
-        .attr('width',width)
-        .attr('height',height)
-        .attr('class', 'bubble');
+      // Use D3 to select element, change color and size
+      d3.select(this).attr({
+        fill: "orange",
+        r: radius * 2
+      });
 
-    //"LOAD" DATA
-    var nodes = bubble.nodes(data_sample)
-      
-    //create a node for each bubble file
-    var node = svg.selectAll(".node")
-      //bind data 
+      // Specify where to put label of text
+      svg.append("text").attr({
+         id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+          x: function() { return xScale(d.x) - 30; },
+          y: function() { return yScale(d.y) - 15; }
+      })
+      .text(function() {
+        return [d.x, d.y];  // Value of the text
+      });
+    }*/
+
+/*function handleMouseOut(d, i) {
+      // Use D3 to select element, change color back to normal
+      d3.select(this).attr({
+        fill: "black",
+        r: radius
+      });
+
+      // Select text by id and then remove
+      d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();  // Remove text location
+    }
+*/
+
+
+////////// PART 2 //////////
+
+//set screen pixel sizes
+var width = 800, height = 600;
+
+var chart = d3.select("body").append("svg")
+  .attr("width", width).attr("height", height) 
+  .append("g")
+    .attr("transform", "translate(50,50)");
+
+var pack = d3.layout.pack()
+  .size([width, height - 50])
+  .padding(10);
+
+d3.json("/data", function(error,quotes) {
+  var nodes = pack.nodes(quotes.data[0]);
+
+  var node = chart.selectAll(".node")
       .data(nodes).enter()
     .append("g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-    //add attributes to each create bubble
-    node.append("circle")
-      .attr("r",function(d) { return d.data.category.emails.length; })
-      .attr("fill", color) //make nodes with children invisible
+  node.append("circle")
+      .attr("r",function(d) { return d.r })
+      .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
       .attr("opacity", 0.25)
-      .attr("stroke", color) //make nodes with children invisible
+      .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
       .attr("stroke-width", 2);
 
-    //add labeled text on top of each bubble
-    node.append("text")
-      .text(function(d) { return d.name; });
+
+  node.append("text")
+      .text(function(d) { return d.children ? "" : d.name; });
+
+});
 
 
-    
-    //Load data, issue with referencing data.json while in local http server
-/*    d3.json("/data/data.json", function(data) {
-      //create data object
-      var nodes = bubble.nodes(data_sample);
-      
-      //create a node for each bubble file
-      var node = chart.selectAll(".node")
-          //bind data 
-          .data(nodes).enter()
-        .append("g")
-          .attr("class", "node")
-          .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-      //add attributes to each create bubble
-      node.append("circle")
-          .attr("r",function(d) { return d.r; })
-          .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
-          .attr("opacity", 0.25)
-          .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
-          .attr("stroke-width", 2);
+var width = 800, height = 600;
 
-      //add labeled text on top of each bubble
-      node.append("text")
-          .text(function(d) { return d.name; });
-    });*/
+var chart = d3.select("body").append("svg")
+  .attr("width", width).attr("height", height)
+  .append("g")
+    .attr("transform", "translate(50,50)");
+
+var pack = d3.layout.pack()
+  .size([width, height - 50])
+  .padding(10);
 
 
-//}
+var nodes = pack.nodes(working_json_v2);
+
+var node = chart.selectAll(".node")
+    .data(nodes).enter()
+  .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+node.append("circle")
+    .attr("r",function(d) { return d.r; })
+    .attr("fill", "steelblue")
+    .attr("opacity", 0.25)
+    .attr("stroke", "#ADADAD")
+    .attr("stroke-width", 2);
+
+node.append("text")
+    .text(function(d) { return d.children ? "" : d.name; });
+
+
+
+
+
+
+/*var width = 800, height = 600;
+
+var chart = d3.select("body").append("svg")
+  .attr("width", width).attr("height", height) 
+  .append("g")
+    .attr("transform", "translate(50,50)");
+
+var pack = d3.layout.pack()
+  .size([width, height - 50])
+  .padding(10);
+
+var nodes = pack.nodes(working_json_v2);
+
+var node = chart.selectAll(".node")
+    .data(nodes).enter()
+  .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+node.append("circle")
+    .attr("r",function(d) { return d.r })
+    .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
+    .attr("opacity", 0.25)
+    .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+    .attr("stroke-width", 2);
+
+
+node.append("text")
+    .text(function(d) { return d.children ? "" : d.name; });*/
+
 
