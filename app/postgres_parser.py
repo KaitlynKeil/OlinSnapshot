@@ -39,8 +39,9 @@ def all_cats_to_json(conn):
 	final_json["data"] = []
 	emails = tab_to_json
 	for cat in categories:
-		temp_dict = {"category":cat,
-		"emails":tab_to_json(conn, cat)}
+		temp_dict = {"name":cat,
+		"children":tab_to_json(conn, cat),
+		"value":20}
 		final_json["data"].append(temp_dict)
 	return json.dumps(final_json, cls=DateTimeEncoder, indent=2)
 
