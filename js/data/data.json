@@ -1,18 +1,100 @@
-[
-	{"name":"Test1",
-	"category": "Food",
-	"location": "West Hall"
-	},
-	{"name":"Test2",
-	"category": "Event",
-	"location": "West Hall"
-	},
-	{"name":"Test3",
-	"category": "Other",
-	"location": "West Hall"
-	},
-	{"name":"Test4",
-	"category": "Educational",
-	"location": "West Hall"
-	}
-]
+var data_sample = 
+{
+  "data": [
+    {
+      "category": "Food",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+      ]
+    },
+    {
+      "category":"Event",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    },
+    {
+      "category":"Other",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {        
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    },
+    {
+      "category":"Lost",
+      "emails": [
+        {
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        },
+        {       
+          "event_time": "17:22:57",
+          "body": "I am putting a Party",
+          "event_place": "Boston Commons",
+          "subject": "Boston Tea Party",
+          "event_data": "2018-03-02",
+          "msg-id": 5,
+          "who": "kaitlyn"
+        }
+
+      ]
+    }
+  ]
+};
