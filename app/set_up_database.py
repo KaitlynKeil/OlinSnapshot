@@ -51,11 +51,12 @@ def create_msg_tab(cur, sch_name):
 	try:
 		tab_name = sch_name+".msg"
 		tab_make = """CREATE TABLE %s(msg_id serial PRIMARY KEY,
-									subject varchar(80),
+									name varchar(80),
 									body text,
 									event_time time,
 									event_date date,
 									event_place varchar(50),
+									value integer,
 									who varchar(100))"""
 		cur.execute(tab_make, (AsIs(tab_name),))
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -67,12 +68,13 @@ def add_email(cur, email_dict):
 	creates an entry in the msg and msg_to_cat tables.
 	email_dict form:
 		{
-			'subject': str,
+			'name': str,
 			'body': str,
 			'event_time': datetime.time,
 			'event_date': datetime.date,
 			'event_place': str,
 			'who': str,
+			'value':5,
 			'categories':any combination of ['Food', 'Event', 'Lost', 'Other']
 		}
 	"""
