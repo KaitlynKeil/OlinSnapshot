@@ -55,6 +55,7 @@ function createGraph() {
   console.log(5);
   console.log(quotes);
   console.log(categories);
+  console.log(quotes.data[0].children);
   //bind data
   var node = chart.selectAll(".node")
       .data(categories).enter()
