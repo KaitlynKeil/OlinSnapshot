@@ -1,5 +1,6 @@
 """
-Author: 
+Tool for scraping gmails and creating a dictionary of relevant content
+Author: Isa Blancett
 Adapted from https://github.com/aloverso/heartbot
 Hacking the Library - Olin College
 """
