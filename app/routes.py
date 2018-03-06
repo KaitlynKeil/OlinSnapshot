@@ -15,7 +15,8 @@ def data():
     conn, cur = pp.connect() # connect to the database and return the connection and cursor
     email_list = es.get_mail()
     for email in email_list:
-    	add_email(cur, email)
+    	pp.add_email(cur, email)
+    conn.commit()
     json_string = pp.all_cats_to_json(conn) # make a json string from it
     pp.close_conn(conn, cur) # close the connection, but don't change things
     return jsonify(json_string) # return the json, which will be accessible from the url/data
