@@ -531,6 +531,7 @@ var pack = d3.layout.pack()
 
 d3.json("/data", function(error,quotes) {
   var nodes = pack.nodes(quotes.data[0]);
+  console.log(5);
   console.log(quotes);
   var node = chart.selectAll(".node")
       .data(nodes).enter()
@@ -565,7 +566,7 @@ var pack = d3.layout.pack()
   .padding(10);
 
 
-var nodes = pack.nodes(working_json_v2);
+var nodes = pack.nodes(data_sample.data);
 
 var node = chart.selectAll(".node")
     .data(nodes).enter()
