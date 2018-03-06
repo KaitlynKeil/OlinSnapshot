@@ -1,4 +1,32 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask
+
+"""
+This might be what I need to do to make the datetime work
+We decided to ignore the date and time for the time being,
+as it isn't being used for anything in our visualization.
+In the future, this could be used to sort through old emails
+and make sure that only current things are displayed.
+"""
+
+# from flask.json import JSONEncoder
+# from datetime import date
+
+
+# class CustomJSONEncoder(JSONEncoder):
+
+#     def default(self, obj):
+#         try:
+#             if isinstance(obj, date):
+#                 return obj.isoformat()
+#             iterable = iter(obj)
+#         except TypeError:
+#             pass
+#         else:
+#             return list(iterable)
+#         return JSONEncoder.default(self, obj)
+
+# app = Flask(__name__)
+# app.json_encoder = CustomJSONEncoder
 
 app = Flask(__name__)
 

@@ -53,8 +53,8 @@ def create_msg_tab(cur, sch_name):
 		tab_make = """CREATE TABLE %s(msg_id serial PRIMARY KEY,
 									name varchar(80),
 									body text,
-									event_time time,
-									event_date date,
+									event_time time, # DNE
+									event_date date, # DNE
 									event_place varchar(50),
 									value integer,
 									who varchar(100))"""
@@ -70,8 +70,8 @@ def add_email(cur, email_dict):
 		{
 			'name': str,
 			'body': str,
-			'event_time': datetime.time,
-			'event_date': datetime.date,
+			'event_time': datetime.time, <= CURRENTLY DELETED
+			'event_date': datetime.date, <= CURRENTLY DELETED
 			'event_place': str,
 			'who': str,
 			'value':5,
@@ -163,43 +163,11 @@ def populate_join_tab(cur, sch_name, email_id, cat_list):
 if __name__ == '__main__':
 	conn, cur = connect()
 	sch_name = 'emails'
-
-	email1 = {'subject': 'Boba Tea in 4N',
-			'body': 'we have milk and black tea.  come and get it!!',
-			'event_time': time(8,30,0), 
-			'event_date': date(year=2018, month=3, day=9), 
-			'event_place': 'WH326', 
-			'who': 'miley.cyrus@students.olin.edu', 
-			'categories': ['Food']}
-	email2 = {'subject': 'Star Wars Movie Marathon',
-			'body': 'may the force be with us', 
-			'event_time': time(23,59,59), 
-			'event_date': date(year=2018, month=5, day=4), 
-			'event_place': 'Norden Auditorium', 
-			'who': 'mark.hamill@students.olin.edu', 
-			'categories': ['Event']}
-	email3 = {'subject': 'Lost Cat', 
-			'body': 'Princess went missing today.  I miss her so much.', 
-			'event_time': None, 
-			'event_date': None, 
-			'event_place': None, 
-			'who': 'taylor.swift@students.olin.edu', 
-			'categories': ['Lost']}
-	email4 = {'subject': 'Do you have a hard time getting into Boston?', 
-			'body': 'Take our P&M survey!', 
-			'event_time': None, 
-			'event_date': None, 
-			'event_place': None, 
-			'who': 'first.year@students.olin.edu', 
-			'categories': ['Other']}
-	add_email(cur, email1)
-	add_email(cur, email2)
-	add_email(cur, email3)
-	add_email(cur, email4)
-	# create_schema(cur, sch_name)
-	# create_cat_tab(cur, sch_name)
-	# create_join_tab(cur, sch_name)
-	# create_msg_tab(cur, sch_name)
+	
+	create_schema(cur, sch_name)
+	create_cat_tab(cur, sch_name)
+	create_join_tab(cur, sch_name)
+	create_msg_tab(cur, sch_name)
 	#close_conn(conn, cur)
-	# get_cat_id(cur, sch_name, 'Event')
+	get_cat_id(cur, sch_name, 'Event')
 	no_commit_close_conn(conn, cur)
