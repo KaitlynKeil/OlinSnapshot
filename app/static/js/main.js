@@ -69,7 +69,7 @@ function createGraph() {
   // set properties based on the data
   node.append("circle")
       .attr("r",function(d) { return d.r })
-      .attr("fill", function(d){ return d.children ? "#fff" : "steelblue"; }) //make nodes with children invisible
+      .attr("fill", function(d){ return d.children ? "#fff" : d.color; }) //make nodes with children invisible
       .attr("opacity", 0.25)
       .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
       .attr("stroke-width", 2);
