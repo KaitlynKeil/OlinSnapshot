@@ -22,8 +22,7 @@ function createGraph() {
 
   //Requesting the data bound to /data endpoint
   d3.json("/data", function(error,quotes) {
-    //bind data 
-    var nodes = pack.nodes(quotes.data[0]);
+    
     //create category json 
     var categories = {
     "name": "Categories",
@@ -51,9 +50,12 @@ function createGraph() {
       }
     ]
   };
+  var nodes = pack.nodes(categories);
   //log some values to check
   console.log(5);
   console.log(quotes);
+  console.log(categories);
+  console.log(quotes.data[0].children);
   //bind data
   var node = chart.selectAll(".node")
       .data(categories).enter()
@@ -72,12 +74,8 @@ function createGraph() {
   // add category labels
   node.append("text")
       .text(function(d) { return d.children ? "" : d.name; });
-
   });
 };
-
-
-
 
 
 
