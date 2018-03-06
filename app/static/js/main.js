@@ -50,15 +50,18 @@ function createGraph() {
       }
     ]
   };
+  //format data
   var nodes = pack.nodes(categories);
+  
   //log some values to check
   console.log(5);
   console.log(quotes);
   console.log(categories);
   console.log(quotes.data[0].children);
+
   //bind data
   var node = chart.selectAll(".node")
-      .data(categories).enter()
+      .data(nodes).enter()
     .append("g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
