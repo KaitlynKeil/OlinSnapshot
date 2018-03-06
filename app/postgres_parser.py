@@ -34,6 +34,7 @@ def tab_to_json(conn, cat):
 	return email_list
 
 def all_cats_to_json(conn):
+	""" Makes all the categories to a json."""
 	categories = ["Food", "Event", "Lost", "Other"]
 	final_json = {}
 	final_json["data"] = []
@@ -43,6 +44,8 @@ def all_cats_to_json(conn):
 		"children":tab_to_json(conn, cat),
 		"value":20}
 		final_json["data"].append(temp_dict)
+
+	# TO DO: Add the Datetime encoding back in (event_time, event_date)
 	return final_json
 
 def get_from_cat():
