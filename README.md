@@ -13,6 +13,7 @@ Flask
 Pip
 json
 psycopg2
+postgresql
 Linux or OSX? (Untested in Windows)
 
 ## Getting Started
@@ -43,18 +44,3 @@ flask run
 We are using a Gmail account that is forwarded emails from an Outlook account.  How you set up this account may be specific to the clients you are using.  If you are using Gmail, make sure that 'POP' and 'allow access from less secure apps' are both enabled.  Please email isabel.blancett@students.olin.edu if you have any questions regarding this step.
 
 Deployed to: https://appname.herokuapp.com/
-
-### Development
-
-If working with Postgres on Linux, 
-
-```
-sudo apt-get install postgresql
-which psql
-sudo -u postgres -i // Log into postgres to run
-psql
-\q // exits psql
-exit // exits postgres
-```
-
-Here's a [helpful link](https://devcenter.heroku.com/articles/heroku-postgresql).
