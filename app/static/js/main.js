@@ -59,7 +59,38 @@ function createGraph() {
   console.log(categories);
   console.log(quotes.data[0].children);
 
-  updateGraphics(nodes);
+  var node = chart.selectAll(".node")
+      .data(nodes).enter()
+      .append("g")
+        .attr("class","node")
+        .attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    //update old elements 
+    node.attr("class","update");
+
+    //enter + update
+    node.append("circle")
+      .attr("class","enter")
+      .attr("r",function(d) { return d.r })
+      .attr("fill", function(d){ return d.children ? "#fff" : d.color; }) //make nodes with children invisible
+      .attr("opacity", 0.25)
+      .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+      .attr("stroke-width", 2);
+
+    //add label with name information
+    node.append("text")
+      .text(function(d) {return d.children ? "" : d.name});
+
+    //add click functionality
+    node.on('click',datum => {
+      console.log(datum);
+      updateData(datum.name);
+    })
+
+    //remove old elements
+    node.exit().remove();
+
+    console.log("we tried!")
   });
 };
 
@@ -118,7 +149,7 @@ function updateData(selected_category) {
   }
 };
 
-function updateGraphics(input_data){
+/*function updateGraphics(input_data){
     //select all node and join new data in
     var node = chart.selectAll(".node")
       .data(input_data).enter()
@@ -152,7 +183,7 @@ function updateGraphics(input_data){
     node.exit().remove();
 
     console.log("we tried!")
-};
+};*/
 
 
 
