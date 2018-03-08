@@ -18,12 +18,12 @@ Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 
 ## Installing Virtual Environment, Heroku CLI, & Postgresql
 
-Virtual Environment:
+### Virtual Environment:
 ```
 python3 -m pip install --user virtualenv
 ```
 
-Heroku CLI:
+### Heroku CLI
 For Linux: make sure you have Ruby installed and use this command
 ```
 wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
@@ -33,7 +33,7 @@ For OSX:
 brew install heroku/brew/heroku
 ```
 
-Postgresql:
+### Postgresql
 For Linux:
 ```
 sudo apt-get update
