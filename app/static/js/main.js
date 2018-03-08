@@ -65,8 +65,8 @@ function createGraph() {
         .attr("class","node")
         .attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-    //update old elements 
-    node.attr("class","update");
+/*    //update old elements 
+    node.attr("class","update");*/
 
     //enter + update
     node.append("circle")
@@ -81,14 +81,14 @@ function createGraph() {
     node.append("text")
       .text(function(d) {return d.children ? "" : d.name});
 
-    //add click functionality
+/*    //add click functionality
     node.on('click',datum => {
       console.log(datum);
       updateData(datum.name);
     })
 
     //remove old elements
-    node.exit().remove();
+    node.exit().remove();*/
 
     console.log("we tried!")
   });
