@@ -59,8 +59,8 @@ function createGraph() {
   console.log(categories);
   console.log(quotes.data[0].children);
 
-  updateGraphics(nodes)
-  };
+  updateGraphics(nodes);
+  });
 };
 
 /*var node = chart.selectAll(".node")
