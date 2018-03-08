@@ -1,5 +1,6 @@
 # OlinSnapshot
 Takes emails from the HelpMe and CarpeDiem email lists at Olin College and presents them in an interactive UI
+
 You can find the results at https://olin-snapshot.herokuapp.com/.
 
 ## Contributors
@@ -15,6 +16,41 @@ Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 - [postgresql](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 - Linux or OSX? (Untested in Windows)
 
+## Installing Virtual Environment, Heroku CLI, & Postgresql
+
+Virtual Environment:
+```
+python3 -m pip install --user virtualenv
+```
+
+Heroku CLI:
+For Linux: make sure you have Ruby installed and use this command
+```
+wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+```
+For OSX:
+```
+brew install heroku/brew/heroku
+```
+
+Postgresql:
+For Linux:
+```
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+```
+For OSX:
+```
+brew install postgresql
+```
+
+## Setting up Gmail for POP
+We are using a Gmail account that is forwarded emails from an Outlook account.  How you set up this account may be specific to the clients you are using.  If you are using Gmail, make sure that 'POP' and 'allow access from less secure apps' are both enabled.  Please email isabel.blancett@students.olin.edu if you have any questions regarding this step.
+
+On your Gmail account:
+1. Settings>Forwarding and POP/IMAP>Enable POP for all mail
+2. My Account>Apps with account access(under Sign-in & Security)>Allow Less Secure Apps
+
 ## Getting Started
 To clone and setup virtual environment:
 ```
@@ -26,7 +62,7 @@ pip install -r requirements.txt
 ```
 Create a heroku app `heroku create appname` and run git remote `heroku git:remote -a <app name>` to link.
 
-### Initialize the database
+### Initializing Database
 
 In order to set up a database in Heroku, use `heroku addons` to make sure it does not already exist. If heroku-postgresql appears in the app's list of add-ons, you can move on. Otherwise, you can provision it with the command `heroku addons:create heroku-postgresql:<PLAN_NAME>`. hobby-dev as a plan should be enough. Use `heroku config` to make sure you have a DATABASE_URL variable. If more help is needed, you can [read about provisioning heroku postgres at this link](https://devcenter.heroku.com/articles/heroku-postgresql#provisioning-heroku-postgres).
 
@@ -63,7 +99,5 @@ git commit -am "Initializing heroku app"
 git push heroku master
 heroku open
 ```
-
-We are using a Gmail account that is forwarded emails from an Outlook account.  How you set up this account may be specific to the clients you are using.  If you are using Gmail, make sure that 'POP' and 'allow access from less secure apps' are both enabled.  Please email isabel.blancett@students.olin.edu if you have any questions regarding this step.
 
 Deployed to: https://appname.herokuapp.com/
