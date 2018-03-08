@@ -84,7 +84,7 @@ function createGraph() {
     //add click functionality
     node.on('click',datum => {
       console.log(datum);
-      switch(datum){
+      switch(datum.name){
         case "Food":
           var nodes = pack.nodes(data_sample.data[0]);
           updateGraphics(nodes);
