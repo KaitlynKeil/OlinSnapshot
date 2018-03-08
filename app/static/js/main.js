@@ -23,7 +23,7 @@ function createGraph() {
 
   //Requesting the data bound to /data endpoint
   d3.json("/data", function(error,quotes) {
-    input_data =  
+    var input_data =  
       {
         "name": "Categories",
         "value": 60,
@@ -50,8 +50,8 @@ function createGraph() {
           }
         ]
       };
-    updateGraphics(input_data,quotes);
-/*    //create category json 
+    //updateGraphics(input_data,quotes);
+    //create category json 
     var categories = {
     "name": "Categories",
     "value": 60,
@@ -142,7 +142,7 @@ function createGraph() {
     node.exit().remove();
 
     console.log("we tried!")
-  */
+  
   });
 };
 
