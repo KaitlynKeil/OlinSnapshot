@@ -25,8 +25,8 @@ def get_mail():
     Connect to gmail accound and retrieve messages
     """
     pop_conn = poplib.POP3_SSL('pop.gmail.com')
-    pop_conn.user('olinsnapshot@gmail.com')
-    pop_conn.pass_('hackingthelibrary')
+    pop_conn.user(os.environ('SNAPSHOT_EMAIL'))
+    pop_conn.pass_(os.environ('SNAPSHOT_PASS'))
     messages = [pop_conn.retr(i) for i in range(1, len(pop_conn.list()[1]) + 1)]
     pop_conn.quit()
 
