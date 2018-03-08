@@ -29,6 +29,8 @@ To run simple flask app on local host:
 export DATABASE_URL
 heroku config -a olin-snapshot
 DATABASE_URL=<value from heroku config DATABASE_URL>
+SNAPSHOT_EMAIL=<your gmail>
+SNAPSHOT_PASS=<your password>
 
 export FLASK_APP=olinsnapshot.py
 flask run
