@@ -3,6 +3,10 @@ Takes emails from the HelpMe and CarpeDiem email lists at Olin College and prese
 
 You can find the results at https://olin-snapshot.herokuapp.com/.
 
+![Home Screen](app_preview.png)
+
+To view data from Postgres Database, go to https://olin-snapshot.herokuapp.com/data.
+
 ## Contributors
 Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 
