@@ -53,8 +53,8 @@ def create_msg_tab(cur, sch_name):
 		tab_make = """CREATE TABLE %s(msg_id serial PRIMARY KEY,
 									name varchar(80),
 									body text,
-									event_time time, # DNE
-									event_date date, # DNE
+									-- event_time time, # TODO: Add time and date back in
+									-- event_date date,
 									event_place varchar(50),
 									value integer,
 									who varchar(100))"""
@@ -168,6 +168,4 @@ if __name__ == '__main__':
 	create_cat_tab(cur, sch_name)
 	create_join_tab(cur, sch_name)
 	create_msg_tab(cur, sch_name)
-	#close_conn(conn, cur)
-	get_cat_id(cur, sch_name, 'Event')
-	no_commit_close_conn(conn, cur)
+	close_conn(conn, cur)
