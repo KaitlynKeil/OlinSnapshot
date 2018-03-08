@@ -151,7 +151,7 @@ function updateGraphics(input_data){
     //remove old elements
     node.exit().remove();
 
-    console.log()
+    console.log("we tried!")
 };
 
 
