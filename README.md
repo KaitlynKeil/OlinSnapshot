@@ -1,5 +1,5 @@
 # OlinSnapshot
-Takes emails from the HelpMe and CarpeDiem email lists at Olin College and presents them in an interactive UI
+Takes emails from the HelpMe and CarpeDiem email lists at Olin College, scrapes and sorts them, and presents them in an interactive UI
 
 You can find the results at https://olin-snapshot.herokuapp.com/.
 
@@ -22,13 +22,13 @@ Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 
 ## Installing Virtual Environment, Heroku CLI, & Postgresql
 
-### Virtual Environment:
+### Virtual Environment
 ```
 python3 -m pip install --user virtualenv
 ```
 
 ### Heroku CLI
-For Linux: make sure you have Ruby installed and use this command
+For Linux:
 ```
 wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
 ```
@@ -48,7 +48,7 @@ For OSX:
 brew install postgresql
 ```
 
-## Setting up Gmail for POP
+## Setting up Outlook & Gmail for POP
 We are using a Gmail account that is forwarded emails from an Outlook account.  How you set up this account may be specific to the clients you are using.  If you are using Gmail, make sure that 'POP' and 'allow access from less secure apps' are both enabled.  Please email isabel.blancett@students.olin.edu if you have any questions regarding this step.
 
 On your Gmail account:
@@ -64,7 +64,7 @@ virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-Create a heroku app `heroku create appname` and run git remote `heroku git:remote -a <app name>` to link.
+Create a heroku app `heroku create appname` and run git remote `heroku git:remote -a <app name>` to link.  Make sure to give your app a unique name, because 'olin-snapshot' is taken by us!
 
 ### Initializing Database
 
@@ -84,7 +84,6 @@ The database should now be set up.
 ### Running locally
 
 To run simple flask app on local host:
-(Remember to give your app a different name, because we have already taken 'olin-snapshot'!)
 ```
 heroku config -a <app name>
 export DATABASE_URL=<value from heroku config DATABASE_URL>
@@ -95,7 +94,8 @@ export FLASK_APP=olinsnapshot.py
 flask run
 ```
 
-To run on heroku:
+## Deployment to Heroku
+
 ```
 heroku config:set SNAPSHOT_EMAIL=<your gmail> SNAPSHOT_PASS=<your pass>
 git add .
@@ -105,3 +105,10 @@ heroku open
 ```
 
 Deployed to: https://appname.herokuapp.com/
+
+## Issues
+- D3 cannot currently handle user events (clicks)
+- Email scraper grabs Outlook account as original sender of the email
+- Email content is littered with formatting
+- Date & Time objects are not supported
+- No iCal support
