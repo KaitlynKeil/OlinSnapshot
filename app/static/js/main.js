@@ -84,9 +84,36 @@ function createGraph() {
     //add click functionality
     node.on('click',datum => {
       console.log(datum);
-      updateData(datum.name);
-    })
+      switch(datum){
+        case "Food":
+          var nodes = pack.nodes(data_sample.data[0]);
+          updateGraphics(nodes);
+          console.log("Food selected");
+          console.log(nodes);
+          break;
+        case "Other":
+          var nodes = pack.nodes(data_sample.data[1]);
+          updateGraphics(nodes);
+          console.log("Other selected");
+          console.log(nodes);
+          break;
+        case "Events":
+          var nodes = pack.nodes(data_sample.data[2]);
+          updateGraphics(nodes);
+          console.log("Events selected");
+          console.log(nodes);
+          break;
+        case "Lost":
+          var nodes = pack.nodes(data_sample.data[3]);
+          updateGraphics(nodes);
+          console.log("Lost selected");
+          console.log(nodes);
+          break;
+        default:
+          console.log("Category not found!") 
 
+      }
+    });
     //remove old elements
     node.exit().remove();
 
