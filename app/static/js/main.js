@@ -59,31 +59,99 @@ function createGraph() {
   console.log(categories);
   console.log(quotes.data[0].children);
 
-  //bind data
-  var node = chart.selectAll(".node")
-      .data(nodes).enter()
-    .append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+updateGraphics(nodes)
+};
 
-  // set properties based on the data
-  node.append("circle")
+/*var node = chart.selectAll(".node")
+    .data(nodes).enter()
+  .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+node.append("circle")
+    .attr("r",function(d) { return d.r })
+    .attr("fill", function(d){ return d.children ? "#fff" : d.color; }) //make nodes with children invisible
+    .attr("opacity", 0.25)
+    .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
+    .attr("stroke-width", 2);
+    
+node.on('click',datum => {
+      console.log(datum);
+      update(datum.name);
+    })
+
+node.append("text")
+    .text(function(d) { return d.children ? "" : d.name; });*/
+
+//update reference d3 database object
+function updateData(selected_category) {
+  //choose correct data depending on selected_category
+  switch(selected_category){
+    case "Food":
+      var nodes = pack.nodes(data_sample.data[0]);
+      updateGraphics(nodes);
+      console.log("Food selected");
+      console.log(nodes);
+      break;
+    case "Other":
+      var nodes = pack.nodes(data_sample.data[1]);
+      updateGraphics(nodes);
+      console.log("Other selected");
+      console.log(nodes);
+      break;
+    case "Events":
+      var nodes = pack.nodes(data_sample.data[2]);
+      updateGraphics(nodes);
+      console.log("Events selected");
+      console.log(nodes);
+      break;
+    case "Lost":
+      var nodes = pack.nodes(data_sample.data[3]);
+      updateGraphics(nodes);
+      console.log("Lost selected");
+      console.log(nodes);
+      break;
+    default:
+      console.log("Category not found!") 
+
+  }
+};
+
+function updateGraphics(input_data){
+    //select all node and join new data in
+    var node = chart.selectAll(".node")
+      .data(input_data).enter()
+      .append("g")
+        .attr("class","node")
+        .attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    //update old elements 
+    node.attr("class","update");
+
+    //enter + update
+    node.append("circle")
+      .attr("class","enter")
       .attr("r",function(d) { return d.r })
       .attr("fill", function(d){ return d.children ? "#fff" : d.color; }) //make nodes with children invisible
       .attr("opacity", 0.25)
       .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
       .attr("stroke-width", 2);
 
-  // add category labels
-  node.append("text")
-      .text(function(d) { return d.children ? "" : d.name; });
-  });
+    //add label with name information
+    node.append("text")
+      .text(function(d) {return d.children ? "" : d.name});
+
+    //add click functionality
+    node.on('click',datum => {
+      console.log(datum);
+      updateData(datum.name);
+    })
+
+    //remove old elements
+    node.exit().remove();
+
+    console.log()
 };
-
-
-
-
-
 
 
 
