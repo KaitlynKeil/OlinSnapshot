@@ -148,6 +148,7 @@ function updateData(selected_category) {
   switch(selected_category){
     case "Food":
       var nodes = pack.nodes(quotes.data[0]);
+      console.log("did this update?????");
       console.log("Food selected");
       console.log(nodes);
       break;
