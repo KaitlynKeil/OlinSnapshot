@@ -1,4 +1,2 @@
 Flask==0.12.2
-gunicorn==19.1.1
 psycopg2==2.7.4
-ujson==1.35
