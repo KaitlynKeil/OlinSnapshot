@@ -86,25 +86,25 @@ function createGraph() {
       console.log(datum);
       switch(datum.name){
         case "Food":
-          var nodes = pack.nodes(data_sample.data[0]);
+          var nodes = pack.nodes(quotes.data[0]);
           updateGraphics(nodes);
           console.log("Food selected");
           console.log(nodes);
           break;
         case "Other":
-          var nodes = pack.nodes(data_sample.data[1]);
+          var nodes = pack.nodes(quotes.data[1]);
           updateGraphics(nodes);
           console.log("Other selected");
           console.log(nodes);
           break;
         case "Events":
-          var nodes = pack.nodes(data_sample.data[2]);
+          var nodes = pack.nodes(quotes.data[2]);
           updateGraphics(nodes);
           console.log("Events selected");
           console.log(nodes);
           break;
         case "Lost":
-          var nodes = pack.nodes(data_sample.data[3]);
+          var nodes = pack.nodes(quotes.data[3]);
           updateGraphics(nodes);
           console.log("Lost selected");
           console.log(nodes);
@@ -147,25 +147,25 @@ function updateData(selected_category) {
   //choose correct data depending on selected_category
   switch(selected_category){
     case "Food":
-      var nodes = pack.nodes(data_sample.data[0]);
+      var nodes = pack.nodes(quotes.data[0]);
       updateGraphics(nodes);
       console.log("Food selected");
       console.log(nodes);
       break;
     case "Other":
-      var nodes = pack.nodes(data_sample.data[1]);
+      var nodes = pack.nodes(quotes.data[1]);
       updateGraphics(nodes);
       console.log("Other selected");
       console.log(nodes);
       break;
     case "Events":
-      var nodes = pack.nodes(data_sample.data[2]);
+      var nodes = pack.nodes(quotes.data[2]);
       updateGraphics(nodes);
       console.log("Events selected");
       console.log(nodes);
       break;
     case "Lost":
-      var nodes = pack.nodes(data_sample.data[3]);
+      var nodes = pack.nodes(quotes.data[3]);
       updateGraphics(nodes);
       console.log("Lost selected");
       console.log(nodes);
