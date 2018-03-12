@@ -79,11 +79,8 @@ def add_email(cur, email_dict):
 		}
 	"""
 	cat_list = email_dict['categories']
-	print("Got cat list")
 	del email_dict['categories']
-	print("Deleted categories")
 	msg_id = insert_from_dict(cur, 'emails.msg', email_dict, 'msg_id')
-	print("Adding Email...")
 	populate_join_tab(cur, 'emails', msg_id, cat_list)
 
 def insert_from_dict(cur, tab_name, datadict, id_name = None):
@@ -97,7 +94,7 @@ def insert_from_dict(cur, tab_name, datadict, id_name = None):
 				and the values as values to be inserted
 	"""
 	columns = datadict.keys()
-	print(columns)
+	# datadict['date'] = datadict['date']
 	values = [datadict[column] for column in columns]
 
 	return_id = None
@@ -145,7 +142,10 @@ def get_cat_id(cur, sch_name, cat_name):
 	"""
 	tab_name = sch_name+'.cats'
 	sql = """SELECT cat_id FROM %s WHERE %s.cat_name = %s"""
-	cur.execute(sql, (AsIs(tab_name), AsIs(tab_name), cat_name))
+	try:
+		cur.execute(sql, (AsIs(tab_name), AsIs(tab_name), cat_name))
+	except(Exception) as e:
+		print(e.pgerror)
 	return cur.fetchone()[0]
 	
 def populate_join_tab(cur, sch_name, email_id, cat_list):
@@ -156,7 +156,6 @@ def populate_join_tab(cur, sch_name, email_id, cat_list):
 	insert_statement = 'insert into %s (msg_id, cat_id) values %s'
 
 	for cat in cat_list:
-		print("Adding", cat + "...")
 		cat_id = get_cat_id(cur, sch_name, cat)
 		cur.execute(insert_statement, (AsIs(tab_name), tuple((email_id, cat_id))))
 
