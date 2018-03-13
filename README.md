@@ -12,6 +12,10 @@ To view data from Postgres Database, go to the [data page](https://olin-snapshot
 
 Mackenzie Frackleton, Kaitlyn Keil, Isa Blancett, and Wilson Tang
 
+## Contributions
+
+Aloverso's heartbot at: https://github.com/aloverso/heartbot
+
 ## Requirements
 
 * Python3
