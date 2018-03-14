@@ -136,6 +136,14 @@ heroku open
 
 Deployed to: https://appname.herokuapp.com/
 
+## General Set Up
+
+![Architecture Diagram](./docs/snapshot_arch.jpg)
+
+Most of the programs are contained in 'app'. When this is called either by heroku or by a local server, it runs `__init__.py`, which in turn imports `routes.py`. This sets up the two available pages as they are accessed: `/index`, which is imported from `templates/index.html` and displays the D3 graphics, and `/data`, which updates and reads the database.
+
+When `/data` is accessed, `routes.py` uses `email_scraper.py` to check for new emails from the linked gmail account via `poplib` and connects to the database using `config.py`. If any emails are found, they are added to the database through `postgres_parser.py`. After that, `postgres_parser.py` loads all of the emails into any relevant categories and bundles it into a json string, which is sent to the `/data` page. From here, it can be read and used by D3.
+
 ## Issues
 - D3 cannot currently handle user events (clicks)
 - Email scraper grabs Outlook account as original sender of the email
