@@ -148,5 +148,4 @@ When `/data` is accessed, `routes.py` uses `email_scraper.py` to check for new e
 - D3 cannot currently handle user events (clicks)
 - Email scraper grabs Outlook account as original sender of the email
 - Email content is littered with formatting
-- Date & Time objects are not supported
 - No iCal support
