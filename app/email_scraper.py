@@ -77,17 +77,17 @@ def get_mail():
                 header_index = i
                 msg_info = msg[i+1:i+4]
                 i = i + 4
+                if header_index != 1
             elif header_index != -1:
                 if line == "":
                     i = i + 1
                     continue
-                elif "--f" in line:
+                elif "--" in line:
                     break
                 else:
                     body.append(line)
 
             i = i + 1
-
         msg_info.append("body: " + " ".join(body))
         current_dict = list_to_dict(msg_info)
         categories = []
