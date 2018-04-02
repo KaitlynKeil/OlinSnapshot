@@ -80,7 +80,7 @@ To clone and setup virtual environment:
 ```shell
 git clone https://github.com/KaitlynKeil/OlinSnapshot.git
 cd OlinSnapshot
-virtualenv venv
+virtualenv -p python3 venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
