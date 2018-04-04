@@ -77,7 +77,6 @@ def get_mail():
                 header_index = i
                 msg_info = msg[i+1:i+4]
                 i = i + 4
-                if header_index != 1
             elif header_index != -1:
                 if line == "":
                     i = i + 1
