@@ -14,6 +14,7 @@ import time
 import poplib
 import email
 from io import StringIO
+from datetime import datetime
 
 event_words = ['happening', 'fun', 'day', 'fun']
 food_words = ['eat', 'food', 'yummy', 'bring', 'kitchen']
@@ -22,13 +23,25 @@ lost_words = ['missing', 'misplace', 'lost', 'left']
 def list_to_dict(msg):
     d = dict()
     for field in msg:
+        if "*" in field:
+            field = "".join(field.split("*"))
+        if ":" not in field:
+            continue
+
+        print(field)
         key, value = field.split(": ", 1)
-        if key == "Date":
-            key = "date"
+        if key == "Sent":
+            continue
+            #key = "date"
+            #value = value.split(" (", 1)[0]
+            # ex. string at this point: Tuesday, April 3, 2018 3:51:10 PM
+            #value = datetime.strptime(value, "%A, %B %e, %Y %T %p")
         if key == "From":
             key = "who"
         if key == "Subject":
             key = "name"
+        if key == "To":
+            continue
         d[key] = value
     return d
 
@@ -63,7 +76,6 @@ def get_mail():
 
     pop_conn.quit()
 
-
     msg_dicts = []
     for msg in messages:
         if not msg: continue
@@ -73,10 +85,10 @@ def get_mail():
         i = 0
         while(len(msg) > i):
             line = msg[i]
-            if "--- Forwarded message ---" in line:
+            if "CarpediemOn Behalf Of" in line:
                 header_index = i
-                msg_info = msg[i+1:i+4]
-                i = i + 4
+                msg_info = msg[i:i+5]
+                i = i + 5
             elif header_index != -1:
                 if line == "":
                     i = i + 1
@@ -88,8 +100,10 @@ def get_mail():
 
             i = i + 1
         msg_info.append("body: " + " ".join(body))
+        print(msg_info)
         current_dict = list_to_dict(msg_info)
         categories = []
+        print(list(current_dict.keys()))
         subject = current_dict['name']
         body = current_dict['body']
         if any([word in body.lower()+subject.lower() for word in event_words]):
