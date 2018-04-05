@@ -12,7 +12,7 @@ function createGraph() {
 
   //set up the image chart
   var chart = d3.select("body").append("svg")
-    .attr("width", width).attr("height", height) 
+    .attr("width", width).attr("height", height)
     .append("g")
       .attr("transform", "translate(50,50)");
 
@@ -23,7 +23,7 @@ function createGraph() {
 
   //Requesting the data bound to /data endpoint
   d3.json("/data", function(error,quotes) {
-    var input_data =  
+    var input_data =
       {
         "name": "Categories",
         "value": 60,
@@ -51,7 +51,7 @@ function createGraph() {
         ]
       };
     //updateGraphics(input_data,quotes);
-    //create category json 
+    //create category json
     var categories = {
     "name": "Categories",
     "value": 60,
@@ -80,7 +80,7 @@ function createGraph() {
   };
   //format data
   var nodes = pack.nodes(categories);
-  
+
   //log some values to check
   console.log(5);
   console.log(quotes);
@@ -93,7 +93,7 @@ function createGraph() {
         .attr("class","node")
         .attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-    //update old elements 
+    //update old elements
     node.attr("class","update");
 
     //enter + update
@@ -134,7 +134,7 @@ function createGraph() {
           console.log(nodes);
           break;
         default:
-          console.log("Category not found!") 
+          console.log("Category not found!")
 
       }
     });
@@ -142,7 +142,7 @@ function createGraph() {
     node.exit().remove();
 
     console.log("we tried!")
-  
+
   });
 };
 
@@ -158,7 +158,7 @@ node.append("circle")
     .attr("opacity", 0.25)
     .attr("stroke", function(d) { return d.children ? "#fff":"#ADADAD"; } ) //make nodes with children invisible
     .attr("stroke-width", 2);
-    
+
 node.on('click',datum => {
       console.log(datum);
       update(datum.name);
@@ -193,7 +193,7 @@ function updateData(selected_category) {
       console.log(nodes);
       break;
     default:
-      console.log("Category not found!") 
+      console.log("Category not found!")
 
   }
 };
@@ -206,7 +206,7 @@ function updateGraphics(input_data, quotes){
         .attr("class","node")
         .attr("transform",function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-    //update old elements 
+    //update old elements
     node.attr("class","update");
 
     //enter + update
@@ -251,7 +251,7 @@ function updateGraphics(input_data, quotes){
           console.log(nodes);
           break;
         default:
-          console.log("Category not found!") 
+          console.log("Category not found!")
 
       }
     });
@@ -261,8 +261,3 @@ function updateGraphics(input_data, quotes){
 
     console.log("we tried!")
 };
-
-
-
-
-

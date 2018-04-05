@@ -38,6 +38,7 @@ def list_to_dict(msg):
             #value = datetime.strptime(value, "%A, %B %e, %Y %T %p")
         if key == "From":
             key = "who"
+            value = field.split("Behalf Of", 1)[1]
         if key == "Subject":
             key = "name"
         if key == "To":
